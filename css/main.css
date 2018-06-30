@@ -1,0 +1,19 @@
+.card-columns .card .description,
+.card-columns .card .list-footer {
+  display: block;
+}
+
+.card-columns .card .edit-description,
+.card-columns .card .edit-footer {
+  display: none;
+}
+
+.card-columns .card.editable .description,
+.card-columns .card.editable .list-footer {
+  display: none;
+}
+
+.card-columns .card.editable .edit-description,
+.card-columns .card.editable .edit-footer {
+  display: block;
+}

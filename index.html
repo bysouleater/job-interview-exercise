@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" integrity="sha256-BJ/G+e+y7bQdrYkS2RBTyNfBHpA9IuGaPmf9htub5MQ=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="css/main.css">
+
+    <title>Item List</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Item List</h1>
+      <hr/>
+
+      <div class="card-columns" id="item-list">
+        
+      </div>
+    </div>
+
+    <script id="item-template" type="text/x-handlebars-template">
+      <div class="card" data-id="{{id}}">
+        <img class="card-img-top image" src="{{image}}" alt="Card image cap">
+        <div class="card-body">
+          <p class="card-text description">{{description}}</p>
+          <textarea class="form-control edit-description" rows="3">{{description}}</textarea>
+        </div>
+        <div class="card-footer list-footer text-right">
+          <button type="button" class="btn btn-sm btn-primary edit"><span class="oi oi-pencil"></span> Edit</button>
+          <button type="button" class="btn btn-sm btn-danger delete"><span class="oi oi-trash"></span> Delete</button>
+        </div>
+        <div class="card-footer edit-footer text-right">
+          <button type="button" class="btn btn-sm btn-dark discard"><span class="oi oi-x"></span> Discard</button>
+          <button type="button" class="btn btn-sm btn-success save"><span class="oi oi-check"></span> Save</button>
+        </div>
+      </div>
+    </script>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/item-list.js"></script>
+  </body>
+</html>
