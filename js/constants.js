@@ -9,6 +9,7 @@ var NEW_ITEM_CLASS = 'new-item';
 var DATA_ID = 'id';
 var ITEM_LIST = 'itemList';
 var LAST_ID = 'lastId';
+var MAX_DESCRIPTION_LENGTH = 300;
 
 // jQuery Selectors
 var ITEM_LIST_SELECTOR = '#item-list';
@@ -21,3 +22,4 @@ var DISCARD_BUTTON_SELECTOR = '.discard';
 var IMAGE_SELECTOR = '.image';
 var DESCRIPTION_TEXT_SELECTOR = '.description';
 var DESCRIPTION_INPUT_SELECTOR = '.edit-description';
+var DESCRIPTION_CHARS_SELECTOR = '.edit-description-chars span';

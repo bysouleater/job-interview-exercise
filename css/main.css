@@ -12,6 +12,7 @@
 }
 
 #item-list .card .edit-description,
+#item-list .card .edit-description-chars,
 #item-list .card .edit-footer {
   display: none;
 }
@@ -22,6 +23,7 @@
 }
 
 #item-list .card.editable .edit-description,
+#item-list .card.editable .edit-description-chars,
 #item-list .card.editable .edit-footer {
   display: block;
 }

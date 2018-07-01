@@ -25,6 +25,7 @@ function updateItemHTML(item, id) {
   item.find(IMAGE_SELECTOR).attr('src', fields.image);
   item.find(DESCRIPTION_TEXT_SELECTOR).html(fields.description);
   item.find(DESCRIPTION_INPUT_SELECTOR).val(fields.description);
+  item.find(DESCRIPTION_CHARS_SELECTOR).html(MAX_DESCRIPTION_LENGTH - fields.description.length);
 
   toggleItemForm(item);
 }
@@ -73,6 +74,11 @@ function addHandlers(item) {
     } else {
       updateItemHTML(item, item.data(DATA_ID));
     }
+  });
+
+  // Remaining Chars Handler: Updates remaining chars count
+  item.find(DESCRIPTION_INPUT_SELECTOR).bind('input propertychange', function () {
+    item.find(DESCRIPTION_CHARS_SELECTOR).html(MAX_DESCRIPTION_LENGTH - this.value.length);
   });
 }
 
