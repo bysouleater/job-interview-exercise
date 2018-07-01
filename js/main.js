@@ -6,6 +6,11 @@
 function toggleItemForm(item, newClass) {
   item.toggleClass(EDITABLE_CLASS);
   item.toggleClass(NEW_ITEM_CLASS, !!newClass);
+  
+  // Timeout 0 segs to wait for input to appear and correctly focus
+  setTimeout(function(){
+    item.find(DESCRIPTION_INPUT_SELECTOR).focus();
+  });
 }
 
 /**
@@ -110,7 +115,8 @@ $(function () {
   itemListElement.disableSelection();
 
   // Initializa Add Handler
-  $(ADD_BUTTON_SELECTOR).click(function () {
+  $(ADD_BUTTON_SELECTOR).click(function (e) {
+    e.preventDefault();
     var item = ItemList.addItem();
     var itemElement = $(itemTemplate(item));
     addHandlers(itemElement);
