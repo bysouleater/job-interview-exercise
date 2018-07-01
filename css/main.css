@@ -1,19 +1,34 @@
-.card-columns .card .description,
-.card-columns .card .list-footer {
+.main-title {
+  margin-top: 50px;
+}
+
+.add {
+  margin-bottom: 1rem;
+}
+
+#item-list .card .description,
+#item-list .card .list-footer {
   display: block;
 }
 
-.card-columns .card .edit-description,
-.card-columns .card .edit-footer {
+#item-list .card .edit-description,
+#item-list .card .edit-footer {
   display: none;
 }
 
-.card-columns .card.editable .description,
-.card-columns .card.editable .list-footer {
+#item-list .card.editable .description,
+#item-list .card.editable .list-footer {
   display: none;
 }
 
-.card-columns .card.editable .edit-description,
-.card-columns .card.editable .edit-footer {
+#item-list .card.editable .edit-description,
+#item-list .card.editable .edit-footer {
   display: block;
+}
+
+@media (min-width: 768px) {
+  #item-list .card {
+    flex-basis: 25%;
+    max-width: 25%;
+  }
 }

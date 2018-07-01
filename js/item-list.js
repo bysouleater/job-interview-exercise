@@ -1,6 +1,3 @@
-var ITEM_LIST = 'itemList';
-var LAST_ID = 'lastId';
-
 var ItemList = {
   
   items: [],
@@ -27,7 +24,7 @@ var ItemList = {
    * Return next item id using last saved id from localStorage
    */
   nextId: function () {
-    var nextId = (window.localStorage.getItem(LAST_ID) || 0) + 1;
+    var nextId = parseInt(window.localStorage.getItem(LAST_ID) || 0) + 1;
     window.localStorage.setItem(LAST_ID, nextId);
 
     return nextId;
@@ -46,13 +43,12 @@ var ItemList = {
 
   /**
    * Creates a new item in the list and save it
-   * @param {object} fields
    */
-  addItem: function (fields) {
-    var newItem = _.extend({ id: this.nextId() }, fields );
-    this.items.push(newItem);
+  addItem: function () {
+    var newItem = { id: this.nextId(), image: 'images/placeholder.png' };
+    this.items.splice(0, 0, newItem);
     this.saveList();
-    return newItem.id;
+    return newItem;
   },
 
   /**
@@ -60,7 +56,7 @@ var ItemList = {
    * @param {int} id
    */
   removeItem: function (id) {
-    this.items = _.remove(this.items, function(item) {
+    _.remove(this.items, function(item) {
       return item.id === id;
     });
     this.saveList();

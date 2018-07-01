@@ -1,9 +1,11 @@
 /**
- * Show or Hide the edit form of an item
+ * Show or Hide the edit form of an item and add/remove new item mark
  * @param {element} item 
+ * @param {boolean} newClass
  */
-function toggleItemForm(item) {
-  item.toggleClass('editable');
+function toggleItemForm(item, newClass) {
+  item.toggleClass(EDITABLE_CLASS);
+  item.toggleClass(NEW_ITEM_CLASS, !!newClass);
 }
 
 /**
@@ -14,12 +16,24 @@ function toggleItemForm(item) {
 function updateItemHTML(item, id) {
   var fields = ItemList.getItem(id);
 
-  item.data('id', fields.id);
-  item.find('.image').attr('src', fields.image);
-  item.find('.description').html(fields.description);
-  item.find('.edit-description').val(fields.description);
+  item.data(DATA_ID, fields.id);
+  item.find(IMAGE_SELECTOR).attr('src', fields.image);
+  item.find(DESCRIPTION_TEXT_SELECTOR).html(fields.description);
+  item.find(DESCRIPTION_INPUT_SELECTOR).val(fields.description);
 
   toggleItemForm(item);
+}
+
+/**
+ * Removes an item from the list and HTML
+ * @param {element} item 
+ */
+function deleteItem(item) {
+  if (confirm('Are you sure you want to remove this item?')) {
+    ItemList.removeItem(item.data(DATA_ID));
+    item.remove();
+    updateListCount();
+  }
 }
 
 /**
@@ -28,34 +42,32 @@ function updateItemHTML(item, id) {
  */
 function addHandlers(item) {
   // Edit Item Handler: Shows edit form
-  item.find('.edit').click(function () {
+  item.find(EDIT_BUTTON_SELECTOR).click(function () {
     toggleItemForm(item);
   });
 
   // Delete Item Handler: Removes item from list and HMTL
-  item.find('.delete').click(function () {
-    ItemList.removeItem(item.data('id'));
-    item.remove();
+  item.find(DELETE_BUTTON_SELECTOR).click(function () {
+    deleteItem(item);
   });
 
   // Save Item Handler: Creates or Updates and item from the list
-  item.find('.save').click(function () {
-    var id = item.data('id');
+  item.find(SAVE_BUTTON_SELECTOR).click(function () {
+    var id = item.data(DATA_ID);
     var fields = {
-      description: item.find('.edit-description').val()
+      description: item.find(DESCRIPTION_INPUT_SELECTOR).val()
     };
-    if (id) {
-      ItemList.updateItem(id, fields);
-    } else {
-      id = ItemList.addItem(fields);
-    }
+    ItemList.updateItem(id, fields);
     updateItemHTML(item, id);
   });
 
-  // Discard Item Changes Handler: Restores and Item to original state
-  item.find('.discard').click(function () {
-    var id = item.data('id');
-    updateItemHTML(item, id);
+  // Discard Item Changes Handler: Restores and Item to original state or remove if new
+  item.find(DISCARD_BUTTON_SELECTOR).click(function () {
+    if (item.hasClass(NEW_ITEM_CLASS)) {
+      deleteItem(item);
+    } else {
+      updateItemHTML(item, item.data(DATA_ID));
+    }
   });
 }
 
@@ -65,18 +77,26 @@ function addHandlers(item) {
  * @param {object} ui 
  */
 function updateListOrder(event, ui) {
-  var id = $(ui.item).data('id');
+  var id = $(ui.item).data(DATA_ID);
   var position = $(ui.item).index();
   ItemList.updateItemPosition(id, position);
 }
 
+/**
+ * Updates the counter to reflect list size
+ */
+function updateListCount() {
+  $(ITEM_COUNT_SELECTOR).html(ItemList.items.length);
+}
+
 $(function () {
-  var source   = document.getElementById("item-template").innerHTML;
+  var source   = document.getElementById(ITEM_TEMPLATE_SELECTOR).innerHTML;
   var itemTemplate = Handlebars.compile(source);
-  var itemListElement = $('#item-list');
+  var itemListElement = $(ITEM_LIST_SELECTOR);
 
   // Initialize item list
   ItemList.loadList();
+  updateListCount();
   
   // Append all items to HTML
   ItemList.items.forEach(function (item) {
@@ -88,4 +108,14 @@ $(function () {
   // Initialize Drag & Drop Sorting
   itemListElement.sortable({ update: updateListOrder });
   itemListElement.disableSelection();
+
+  // Initializa Add Handler
+  $(ADD_BUTTON_SELECTOR).click(function () {
+    var item = ItemList.addItem();
+    var itemElement = $(itemTemplate(item));
+    addHandlers(itemElement);
+    toggleItemForm(itemElement, true);
+    itemListElement.prepend(itemElement);
+    updateListCount();
+  }); 
 });

@@ -14,10 +14,13 @@
   </head>
   <body>
     <div class="container">
-      <h1>Item List</h1>
+      <h1 class="main-title">Item List (<span id="item-count">0</span>)</h1>
       <hr/>
+      <div class="text-right">
+        <button type="button" class="btn btn-success add"><span class="oi oi-plus"></span> Add New Item</button>
+      </div>
 
-      <div class="card-columns" id="item-list">
+      <div class="card-group" id="item-list">
         
       </div>
     </div>
@@ -48,6 +51,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
+    <script src="js/constants.js"></script>
     <script src="js/main.js"></script>
     <script src="js/item-list.js"></script>
   </body>
