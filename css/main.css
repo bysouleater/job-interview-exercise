@@ -6,24 +6,34 @@
   margin-bottom: 1rem;
 }
 
-#item-list .card .description,
-#item-list .card .list-footer {
-  display: block;
+#item-list .card .image-upload img {
+  cursor: pointer;
+}
+
+#item-list .card .image-upload > label {
+  width: 100%;
+}
+
+#item-list .card .image-upload > input {
+  display: none;
 }
 
 #item-list .card .edit-description,
 #item-list .card .edit-description-chars,
+#item-list .card .image-upload,
 #item-list .card .edit-footer {
   display: none;
 }
 
 #item-list .card.editable .description,
+#item-list .card.editable .image,
 #item-list .card.editable .list-footer {
   display: none;
 }
 
 #item-list .card.editable .edit-description,
 #item-list .card.editable .edit-description-chars,
+#item-list .card.editable .image-upload,
 #item-list .card.editable .edit-footer {
   display: block;
 }

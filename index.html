@@ -21,13 +21,17 @@
       </div>
 
       <div class="card-group" id="item-list">
-        
       </div>
+      <div class="text-center" id="empty-list">Your Item List is empty! Start adding items by clicking on Add New Item button.</div>
     </div>
 
     <script id="item-template" type="text/x-handlebars-template">
       <div class="card" data-id="{{id}}">
         <img class="card-img-top image" src="{{image}}" alt="Card image cap">
+        <div class="image-upload">
+          <label for="file-input-{{id}}"><img class="card-img-top" src="{{image}}"/></label>
+          <input id="file-input-{{id}}" type="file" accept="image/gif, image/jpeg, image/png" />
+        </div>
         <div class="card-body">
           <p class="card-text description">{{description}}</p>
           <textarea class="form-control edit-description" rows="3" maxlength="300" placeholder="Enter a description...">{{description}}</textarea>

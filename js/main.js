@@ -23,6 +23,7 @@ function updateItemHTML(item, id) {
 
   item.data(DATA_ID, fields.id);
   item.find(IMAGE_SELECTOR).attr('src', fields.image);
+  item.find(IMAGE_UPLOADER_IMG_SELECTOR).attr('src', fields.image);
   item.find(DESCRIPTION_TEXT_SELECTOR).html(fields.description);
   item.find(DESCRIPTION_INPUT_SELECTOR).val(fields.description);
   item.find(DESCRIPTION_CHARS_SELECTOR).html(MAX_DESCRIPTION_LENGTH - fields.description.length);
@@ -40,6 +41,41 @@ function deleteItem(item) {
     item.remove();
     updateListCount();
   }
+}
+
+/**
+ * Validates selected image and and set as preview
+ * @param {element} item 
+ * @param {element} uploader 
+ */
+function handleImageUpload(item, uploader) {
+  var file = $(uploader)[0].files[0];
+  var img = new Image();
+
+  // Load image in memory
+  img.src = _URL.createObjectURL(file);
+  
+  // Validates Image size when it loads
+  img.onload = function() {
+    if (this.width <= IMAGE_MAX_WIDTH && this.height <= IMAGE_MAX_HEIGHT) {
+      // Encode Image in base64 to be able to save it on storage
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        // Set base64 value in image src to preview the uploaded image
+        item.find(IMAGE_UPLOADER_IMG_SELECTOR).attr('src', e.target.result);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      alert('Image size must be <= ' + IMAGE_MAX_WIDTH + 'px X ' + IMAGE_MAX_HEIGHT + 'px');
+    }
+  };
+
+  img.onerror = function() {
+    alert('File selected is not valid');
+  };
+
+  // Reset input file to prevent change from triggering when same image uploaded
+  item.find(IMAGE_UPLOADER_INPUT_SELECTOR).val('');
 }
 
 /**
@@ -61,7 +97,8 @@ function addHandlers(item) {
   item.find(SAVE_BUTTON_SELECTOR).click(function () {
     var id = item.data(DATA_ID);
     var fields = {
-      description: item.find(DESCRIPTION_INPUT_SELECTOR).val()
+      description: item.find(DESCRIPTION_INPUT_SELECTOR).val(),
+      image: item.find(IMAGE_UPLOADER_IMG_SELECTOR).attr('src'),
     };
     ItemList.updateItem(id, fields);
     updateItemHTML(item, id);
@@ -79,6 +116,11 @@ function addHandlers(item) {
   // Remaining Chars Handler: Updates remaining chars count
   item.find(DESCRIPTION_INPUT_SELECTOR).bind('input propertychange', function () {
     item.find(DESCRIPTION_CHARS_SELECTOR).html(MAX_DESCRIPTION_LENGTH - this.value.length);
+  });
+
+  // Image Upload Handler: Validates selected image and set as preview
+  item.find(IMAGE_UPLOADER_INPUT_SELECTOR).change(function () {
+    handleImageUpload(item, this);
   });
 }
 
@@ -98,6 +140,7 @@ function updateListOrder(event, ui) {
  */
 function updateListCount() {
   $(ITEM_COUNT_SELECTOR).html(ItemList.items.length);
+  $(EMPTY_LIST_SELECTOR).toggle(!ItemList.items.length);
 }
 
 $(function () {
